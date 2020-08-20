@@ -162,6 +162,10 @@ router.post("/:questionId/answers", verifyToken, async function (
     answer.question = questionId;
 
     const createAnswer = await Answer.create(answer);
+    // also insert in the questions collection
+    const updatedQuestion = Question.findByIdAndUpdate(questionId, {
+      $addToSet: { answers: answer._id },
+    });
     const answerJSON = await createAnswer.toAnswerJSON(next);
     res.status(201).json(answerJSON);
   } catch (err) {

@@ -22,6 +22,7 @@ const questionSchema = new Schema(
       ref: "User",
       required: true,
     },
+    answers: [],
   },
   { timestamps: true }
 );
